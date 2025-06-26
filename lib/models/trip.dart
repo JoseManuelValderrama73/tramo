@@ -1,4 +1,5 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:tramo/constants.dart';
 
 class Point {
   final double lat;
@@ -32,6 +33,7 @@ class Trip {
   late final String time;
   late final String startTime;
   late final String endTime;
+  late final Vehicle vehicle;
   double? distance;
   List<Point> points = [];
   int? vMax;
@@ -53,13 +55,20 @@ class Trip {
     this.name = name;
     endTime = end;
     running = false;
-    /* TODO: guardar en dtb */
+    vehicle = Vehicle.other;
+    /* TODO: guardar en dtb
+    if (points.isNotEmpty) {
+      for (int i = 0; i < points.length - 1; i++) {
+        double dx = points[i + 1].lat - points[i].lat;
+        double dy = points[i + 1].lon - points[i].lon;
+        distance = (distance ?? 0) + (dx * dx + dy * dy).sqrt();
+      } */
   }
 
-  void addPoint(Point p, bool save) {
+  void addPoint(Point p) {
     if (running) {
-      if (save) points.add(p);
-      double l = len().toDouble();
+      points.add(p);
+      double l = points.length.toDouble();
       vAvg = (l - 1 / l) * vAvg! + p.v.toDouble() / l;
       if (p.v > vMax!) vMax = p.v;
     } else {

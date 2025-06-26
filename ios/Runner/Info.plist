@@ -26,21 +26,21 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>YourPurposeKey</key>
+		<string>Tramo requires temporary access to the device's precise location.</string>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Tramo needs access to location when open.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Need motion access for compass heading</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 	</array>
-	<key>NSMotionUsageDescription</key>
-	<string>Need motion access for compass heading</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tramo needs access to location when open.</string>
-  	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
-  	<dict>
-		<key>YourPurposeKey</key>
-		<string>Tramo requires temporary access to the device&apos;s precise location.</string>
-  	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -49,6 +49,8 @@
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 </dict>
 </plist>

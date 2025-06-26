@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411374986410",
+    "project_id": "tramo-fe334",
+    "storage_bucket": "tramo-fe334.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411374986410:android:5c849dcbf94e2d985e1cd3",
+        "android_client_info": {
+          "package_name": "com.josemvalde.tramo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2BnjuLtv591Fy7BImElKNoD0q3WPfznc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
