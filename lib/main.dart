@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:tramo/logo.dart';
-import 'package:tramo/pages/routes.dart';
+import 'package:tramo/pages/trip.dart';
 import 'package:tramo/pages/launch.dart';
-import 'package:tramo/pages/home/home.dart';
+import 'package:tramo/pages/wrapper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,10 +51,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      routes: {
-        '/rutas': (context) => const Routes(),
-        '/launch': (context) => const Launch(),
-      },
       home: CupertinoPageScaffold(
         child: FutureBuilder(
           future: checkPermissions(),
@@ -66,9 +62,9 @@ class MyApp extends StatelessWidget {
               return OrientationBuilder(
                 builder: (context, orientation) {
                   if (orientation == Orientation.landscape) {
-                    return const Home();
+                    return const Wrapper();
                   } else {
-                    return const Routes();
+                    return const TripPage();
                   }
                 },
               );

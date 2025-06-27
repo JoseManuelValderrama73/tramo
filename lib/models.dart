@@ -28,7 +28,7 @@ class Point {
   }
 }
 
-class Trip {
+class TripInfo {
   late final String name;
   late final String time;
   late final String startTime;
@@ -40,7 +40,7 @@ class Trip {
   double? vAvg;
   bool running = false;
 
-  Trip();
+  TripInfo();
 
   void start(String startTime) {
     this.startTime = startTime;
@@ -50,12 +50,12 @@ class Trip {
     running = true;
   }
 
-  void finish(String time, String end, String name) {
+  void finish(String time, String end, String name, Vehicle vehicle) {
     this.time = time;
     this.name = name;
     endTime = end;
     running = false;
-    vehicle = Vehicle.other;
+    this.vehicle = vehicle;
     /* TODO: guardar en dtb
     if (points.isNotEmpty) {
       for (int i = 0; i < points.length - 1; i++) {
@@ -82,6 +82,60 @@ class Trip {
 
   double? getVAvg() {
     return vAvg;
+  }
+
+  int? getVMax() {
+    return vMax;
+  }
+}
+
+class LaunchInfo {
+  late final String name;
+  late final String startTime;
+  late final Vehicle vehicle;
+  late final int vMax;
+  String? zeroHundred;
+  String? zeroTwohundred;
+  String? zeroThreehundred;
+
+  LaunchInfo()
+    : zeroHundred = null,
+      zeroTwohundred = null,
+      zeroThreehundred = null;
+
+  void start(String startTime) {
+    this.startTime = startTime;
+  }
+
+  void finish(String name, Vehicle vehicle, int vMax) {
+    this.name = name;
+    this.vehicle = vehicle;
+    this.vMax = vMax;
+    /* TODO: guardar en dtb */
+  }
+
+  void setZeroHundred(String time) {
+    zeroHundred = time;
+  }
+
+  void setZeroTwohundred(String time) {
+    zeroTwohundred = time;
+  }
+
+  void setZeroThreehundred(String time) {
+    zeroThreehundred = time;
+  }
+
+  String getZeroHundred() {
+    return zeroHundred ?? '-';
+  }
+
+  String getZeroTwoHundred() {
+    return zeroTwohundred ?? '-';
+  }
+
+  String getZeroThreeHundred() {
+    return zeroThreehundred ?? '-';
   }
 
   int? getVMax() {

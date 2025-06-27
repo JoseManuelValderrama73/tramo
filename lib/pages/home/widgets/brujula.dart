@@ -12,7 +12,7 @@ class Brujula extends StatelessWidget {
       stream: FlutterCompass.events,
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.data!.heading == null) {
-          return const Text("Compass not available");
+          return const Center(child: CupertinoActivityIndicator());
         }
 
         final double heading = snapshot.data!.heading!;

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tramo/constants.dart';
-import 'package:tramo/models/trip.dart';
+import 'package:tramo/models.dart';
 
-class RouteTile extends StatelessWidget {
-  final Trip trip;
+class TripTile extends StatelessWidget {
+  final TripInfo trip;
 
-  const RouteTile({super.key, required this.trip});
+  const TripTile({super.key, required this.trip});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,10 @@ class RouteTile extends StatelessWidget {
               const SizedBox(width: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [text('nombre'), text2('fecha')],
+                children: [
+                  Text('nombre'),
+                  Text('fecha', style: subtextStyle),
+                ],
               ),
             ],
           ),
@@ -42,14 +45,14 @@ class RouteTile extends StatelessWidget {
   }
 }
 
-class Routes extends StatefulWidget {
-  const Routes({super.key});
+class TripPage extends StatefulWidget {
+  const TripPage({super.key});
 
   @override
-  State<Routes> createState() => _RoutesState();
+  State<TripPage> createState() => _TripPageState();
 }
 
-class _RoutesState extends State<Routes> {
+class _TripPageState extends State<TripPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -65,7 +68,7 @@ class _RoutesState extends State<Routes> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            return RouteTile(trip: Trip());
+            return TripTile(trip: TripInfo());
           }, childCount: 100),
         ),
       ],
