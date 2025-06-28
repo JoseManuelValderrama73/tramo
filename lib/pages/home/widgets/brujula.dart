@@ -16,7 +16,7 @@ class Brujula extends StatelessWidget {
         }
 
         final double heading = snapshot.data!.heading!;
-        final double rotation = (heading) * (math.pi / 180) * -1;
+        final double rotation = (heading) * (math.pi / 180) * -1 - math.pi / 4;
 
         return Transform.rotate(
           angle: rotation,

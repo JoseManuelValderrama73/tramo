@@ -25,7 +25,8 @@ const double limitePrecisionBuena = 10;
 const double limitePrecisionRegular = 20;
 final LocationSettings locationSettings = const LocationSettings(
   accuracy: LocationAccuracy.high,
-  distanceFilter: 100,
+  distanceFilter: 20,
+  timeLimit: Duration(seconds: 10),
 );
 
 enum Vehicle { car, bike, bus, train, walk, other }

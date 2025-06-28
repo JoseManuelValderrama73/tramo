@@ -71,6 +71,11 @@ class _LaunchState extends State<Launch> {
         Expanded(child: Text(seconds)),
         const Divider(height: 0, color: dividerColor),
         Expanded(child: Velocidad(v: widget.speed)),
+        const Divider(height: 0, color: dividerColor),
+        Expanded(child: Text('Max: $max')),
+        Expanded(child: Text('0 - 100: ${launchInfo.getZeroHundred()}')),
+        Expanded(child: Text('0 - 200: ${launchInfo.getZeroTwohundred()}')),
+        Expanded(child: Text('0 - 300: ${launchInfo.getZeroThreehundred()}')),
       ],
     );
   }

@@ -12,14 +12,18 @@ class _VelocidadAvgState extends State<VelocidadAvg> {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
           const Text('AVG'),
           const SizedBox(width: 7),
-          Text(widget.v != null ? widget.v.toString() : '-',
-              style: const TextStyle(fontSize: 35))
-        ]));
+          Text(
+            widget.v != null ? widget.v!.toStringAsFixed(1) : '-',
+            style: const TextStyle(fontSize: 35),
+          ),
+        ],
+      ),
+    );
   }
 }

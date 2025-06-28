@@ -11,7 +11,7 @@ class Point {
   Point(Position p)
     : lat = p.latitude,
       lon = p.longitude,
-      v = p.speed.toInt(),
+      v = (p.speed * 3.6).toInt(),
       gpsAcc = double.parse(p.accuracy.toStringAsFixed(2)),
       altitude = p.altitude.toInt();
 
@@ -38,15 +38,12 @@ class TripInfo {
   List<Point> points = [];
   int? vMax;
   double? vAvg;
-  bool running = false;
+  bool running;
 
-  TripInfo();
+  TripInfo() : distance = 0, vMax = 0, vAvg = 0, running = false;
 
   void start(String startTime) {
     this.startTime = startTime;
-    distance = 0;
-    vMax = 0;
-    vAvg = 0;
     running = true;
   }
 
@@ -68,8 +65,8 @@ class TripInfo {
   void addPoint(Point p) {
     if (running) {
       points.add(p);
-      double l = points.length.toDouble();
-      vAvg = (l - 1 / l) * vAvg! + p.v.toDouble() / l;
+      int l = points.length;
+      vAvg = ((vAvg! * (l - 1)) + p.v) / l;
       if (p.v > vMax!) vMax = p.v;
     } else {
       throw 'The trip hasnt started';
@@ -130,11 +127,11 @@ class LaunchInfo {
     return zeroHundred ?? '-';
   }
 
-  String getZeroTwoHundred() {
+  String getZeroTwohundred() {
     return zeroTwohundred ?? '-';
   }
 
-  String getZeroThreeHundred() {
+  String getZeroThreehundred() {
     return zeroThreehundred ?? '-';
   }
 
