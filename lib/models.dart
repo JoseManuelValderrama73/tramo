@@ -7,25 +7,22 @@ class Point {
   final int v;
   final double gpsAcc;
   final int altitude;
+  final int slope;
 
   Point(Position p)
     : lat = p.latitude,
       lon = p.longitude,
       v = (p.speed * 3.6).toInt(),
       gpsAcc = double.parse(p.accuracy.toStringAsFixed(2)),
-      altitude = p.altitude.toInt();
-
-  int getV() {
-    return v;
-  }
-
-  double getGpsAcc() {
-    return gpsAcc;
-  }
-
-  int getAltitude() {
-    return altitude;
-  }
+      altitude = p.altitude.toInt(),
+      slope = 0;
+  Point.still(Point p)
+    : lat = p.lat,
+      lon = p.lon,
+      v = 0,
+      gpsAcc = 0.0,
+      altitude = p.altitude,
+      slope = 0;
 }
 
 class TripInfo {
@@ -34,11 +31,12 @@ class TripInfo {
   late final String startTime;
   late final String endTime;
   late final Vehicle vehicle;
-  double? distance;
+  double distance; // m
   List<Point> points = [];
   int? vMax;
   double? vAvg;
   bool running;
+  int? currentSlope;
 
   TripInfo() : distance = 0, vMax = 0, vAvg = 0, running = false;
 
@@ -53,36 +51,25 @@ class TripInfo {
     endTime = end;
     running = false;
     this.vehicle = vehicle;
-    /* TODO: guardar en dtb
-    if (points.isNotEmpty) {
-      for (int i = 0; i < points.length - 1; i++) {
-        double dx = points[i + 1].lat - points[i].lat;
-        double dy = points[i + 1].lon - points[i].lon;
-        distance = (distance ?? 0) + (dx * dx + dy * dy).sqrt();
-      } */
+    // TODO: guardar en dtb
   }
 
   void addPoint(Point p) {
     if (running) {
       points.add(p);
+      distance = distance + 20;
       int l = points.length;
       vAvg = ((vAvg! * (l - 1)) + p.v) / l;
       if (p.v > vMax!) vMax = p.v;
+      if (l > 1) {
+        currentSlope =
+            ((points[l - 1].altitude - points[l - 2].altitude).abs() /
+                    distanceFilter)
+                .toInt();
+      }
     } else {
       throw 'The trip hasnt started';
     }
-  }
-
-  int len() {
-    return points.length;
-  }
-
-  double? getVAvg() {
-    return vAvg;
-  }
-
-  int? getVMax() {
-    return vMax;
   }
 }
 
@@ -133,9 +120,5 @@ class LaunchInfo {
 
   String getZeroThreehundred() {
     return zeroThreehundred ?? '-';
-  }
-
-  int? getVMax() {
-    return vMax;
   }
 }

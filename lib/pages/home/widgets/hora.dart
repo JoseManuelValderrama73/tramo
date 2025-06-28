@@ -15,8 +15,11 @@ class _HoraState extends State<Hora> {
       stream: Stream.periodic(const Duration(seconds: 1)),
       builder: (context, snapshot) {
         return Center(
-            child: Text(DateFormat('hh:mm').format(DateTime.now()),
-                style: const TextStyle(fontSize: 25)));
+          child: Text(
+            DateFormat('HH:mm').format(DateTime.now()),
+            style: const TextStyle(fontSize: 25),
+          ),
+        );
       },
     );
   }

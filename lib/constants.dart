@@ -23,9 +23,10 @@ TextStyle subtextStyle = TextStyle(
 // Precision
 const double limitePrecisionBuena = 10;
 const double limitePrecisionRegular = 20;
+const int distanceFilter = 20;
 final LocationSettings locationSettings = const LocationSettings(
   accuracy: LocationAccuracy.high,
-  distanceFilter: 20,
+  distanceFilter: distanceFilter,
   timeLimit: Duration(seconds: 10),
 );
 
