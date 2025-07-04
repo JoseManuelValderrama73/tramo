@@ -4,12 +4,13 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:tramo/models/time.dart';
 import 'package:tramo/pages/home/home.dart';
 
 import 'package:tramo/pages/home/widgets/botonera.dart';
 import 'package:tramo/constants.dart';
 import 'package:tramo/logo.dart';
-import 'package:tramo/models.dart';
+import 'package:tramo/models/trip_info.dart';
 import 'package:tramo/pages/home/widgets/mapa.dart';
 import 'package:tramo/pages/launch.dart';
 
@@ -117,7 +118,7 @@ class _WrapperState extends State<Wrapper> {
                         _st.onResetTimer();
                         paused = false;
                         trip.finish(
-                          DateTime.parse(_st.toString()),
+                          Time.fromString(_st.toString()),
                           "nombre",
                           Vehicle.other,
                         );

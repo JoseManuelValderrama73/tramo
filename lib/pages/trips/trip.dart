@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:tramo/constants.dart';
-import 'package:tramo/models.dart';
+import 'package:tramo/models/trip_info.dart';
 import 'package:tramo/pages/trips/trip_popup.dart';
 import 'package:tramo/pages/trips/trip_tile.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 import 'package:tramo/constants.dart';
-import 'package:tramo/models.dart';
+import 'package:tramo/models/launch_info.dart';
 import 'package:tramo/pages/home/widgets/v.dart';
 
 class Launch extends StatefulWidget {

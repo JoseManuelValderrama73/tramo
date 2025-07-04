@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tramo/constants.dart';
-import 'package:tramo/models.dart';
+import 'package:tramo/models/trip_info.dart';
 
 class TripTile extends StatelessWidget {
   final TripInfo trip;
@@ -36,7 +36,7 @@ class TripTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(trip.name),
-                    Text(trip.startTime.toString(), style: subtextStyle),
+                    Text(trip.startTime.date, style: subtextStyle),
                   ],
                 ),
               ],

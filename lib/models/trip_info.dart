@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:tramo/constants.dart';
+import 'package:tramo/models/time.dart';
 
 class Point {
   final double lat;
@@ -27,9 +28,9 @@ class Point {
 
 class TripInfo {
   late final String name;
-  late final DateTime time;
-  late final DateTime startTime;
-  late final DateTime endTime;
+  late final Time time;
+  late final Time startTime;
+  late final Time endTime;
   late final Vehicle vehicle;
   double distance; // m
   List<Point> points = [];
@@ -44,20 +45,20 @@ class TripInfo {
       vMax = 0,
       vAvg = 0,
       running = false,
-      time = DateTime(1970, 1, 1, 0, 0, 0, 0, 0),
-      startTime = DateTime.now(),
-      endTime = DateTime.now(),
+      time = Time(DateTime(1970, 1, 1, 0, 0, 0, 0, 0)),
+      startTime = Time.now(),
+      endTime = Time.now(),
       vehicle = Vehicle.car;
 
   void start() {
-    startTime = DateTime.now();
+    startTime = Time.now();
     running = true;
   }
 
-  void finish(DateTime time, String name, Vehicle vehicle) {
+  void finish(Time time, String name, Vehicle vehicle) {
     this.time = time;
     this.name = name;
-    endTime = DateTime.now();
+    endTime = Time.now();
     running = false;
     this.vehicle = vehicle;
     // TODO: guardar en dtb
@@ -79,55 +80,5 @@ class TripInfo {
     } else {
       throw 'The trip hasnt started';
     }
-  }
-}
-
-class LaunchInfo {
-  late final String name;
-  late final DateTime startTime;
-  late final Vehicle vehicle;
-  late final int vMax;
-  String? zeroHundred;
-  String? zeroTwohundred;
-  String? zeroThreehundred;
-
-  LaunchInfo()
-    : zeroHundred = null,
-      zeroTwohundred = null,
-      zeroThreehundred = null;
-
-  void start() {
-    startTime = DateTime.now();
-  }
-
-  void finish(String name, Vehicle vehicle, int vMax) {
-    this.name = name;
-    this.vehicle = vehicle;
-    this.vMax = vMax;
-    /* TODO: guardar en dtb */
-  }
-
-  void setZeroHundred(String time) {
-    zeroHundred = time;
-  }
-
-  void setZeroTwohundred(String time) {
-    zeroTwohundred = time;
-  }
-
-  void setZeroThreehundred(String time) {
-    zeroThreehundred = time;
-  }
-
-  String getZeroHundred() {
-    return zeroHundred ?? '-';
-  }
-
-  String getZeroTwohundred() {
-    return zeroTwohundred ?? '-';
-  }
-
-  String getZeroThreehundred() {
-    return zeroThreehundred ?? '-';
   }
 }

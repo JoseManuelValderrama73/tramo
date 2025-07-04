@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:intl/intl.dart';
-
 import 'package:tramo/constants.dart';
-import 'package:tramo/models.dart';
+import 'package:tramo/models/trip_info.dart';
 import 'package:tramo/pages/trips/widgets/map_img.dart';
 
 class TripPopup extends StatelessWidget {
@@ -50,13 +48,13 @@ class TripPopup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(trip.name, style: titleStyle.copyWith(fontSize: 40)),
-                  Text(trip.time.toString(), style: titleStyle),
+                  Text(trip.time.hMinSecMil, style: titleStyle),
                   Row(
                     children: [
                       Text('${trip.distance}km'),
                       Expanded(child: SizedBox()),
                       Text(
-                        '${DateFormat('HH:mm:ss.SS').format(trip.startTime)} - ${DateFormat('HH:mm:ss.SS').format(trip.endTime)}',
+                        '${trip.startTime.hMinSec} - ${trip.endTime.hMinSec}',
                       ),
                     ],
                   ),
