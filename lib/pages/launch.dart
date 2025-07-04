@@ -35,7 +35,7 @@ class _LaunchState extends State<Launch> {
     if (widget.speed > threshold && !started) {
       _st.onStartTimer();
       started = true;
-      launchInfo.start(dateFormat(DateTime.now()));
+      launchInfo.start();
     }
     if (widget.speed < prevSpeed - threshold && started && !finished) {
       _st.onStopTimer();
@@ -68,15 +68,64 @@ class _LaunchState extends State<Launch> {
 
     return Column(
       children: [
-        Expanded(child: Text(seconds)),
+        Flexible(
+          flex: 4,
+          child: Center(
+            child: Text(seconds, style: titleStyle.copyWith(fontSize: 60)),
+          ),
+        ),
         const Divider(height: 0, color: dividerColor),
-        Expanded(child: Velocidad(v: widget.speed)),
+        Flexible(flex: 5, child: Velocidad(v: widget.speed)),
         const Divider(height: 0, color: dividerColor),
-        Expanded(child: Text('Max: $max')),
-        Expanded(child: Text('0 - 100: ${launchInfo.getZeroHundred()}')),
-        Expanded(child: Text('0 - 200: ${launchInfo.getZeroTwohundred()}')),
-        Expanded(child: Text('0 - 300: ${launchInfo.getZeroThreehundred()}')),
+        Flexible(
+          flex: 8,
+          child: Column(
+            children: [
+              Expanded(child: Center(child: Text('Max: $max'))),
+              Expanded(
+                child: Center(
+                  child: Text('0 - 100: ${launchInfo.getZeroHundred()}'),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text('0 - 200: ${launchInfo.getZeroTwohundred()}'),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text('0 - 300: ${launchInfo.getZeroThreehundred()}'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
+    /*
+    return Column(
+      children: [
+        Flexible(
+          flex: 3,
+          child: Expanded(
+            child: ,
+          ),
+        ),
+        const Divider(height: 0, color: dividerColor),
+        Flexible(
+          flex: 2,
+          child: Expanded(child: ),
+        ),
+        const Divider(height: 0, color: dividerColor),
+        Flexible(
+          flex: 5,
+          child: Column(
+            children: [
+            ],
+          ),
+        ),
+      ],
+    );
+    */
   }
 }

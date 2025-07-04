@@ -4,20 +4,14 @@ import 'package:geolocator/geolocator.dart';
 
 const CupertinoDynamicColor dividerColor = CupertinoColors.systemGrey4;
 
-Widget title(String t) {
-  return Text(
-    t,
-    style: TextStyle(
-      fontSize: 50,
-      fontWeight: FontWeight.bold,
-      color: CupertinoColors.lightBackgroundGray,
-    ),
-  );
-}
-
 TextStyle subtextStyle = TextStyle(
   fontSize: 15,
   color: CupertinoColors.inactiveGray,
+);
+TextStyle titleStyle = TextStyle(
+  fontSize: 50,
+  fontWeight: FontWeight.bold,
+  color: CupertinoColors.lightBackgroundGray,
 );
 
 // Precision
@@ -32,6 +26,8 @@ final LocationSettings locationSettings = const LocationSettings(
 
 enum Vehicle { car, bike, bus, train, walk, other }
 
+/*
 String dateFormat(DateTime date) {
   return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
 }
+*/

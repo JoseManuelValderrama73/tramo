@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:intl/intl.dart';
 import 'package:tramo/pages/home/home.dart';
 
 import 'package:tramo/pages/home/widgets/botonera.dart';
@@ -102,7 +101,7 @@ class _WrapperState extends State<Wrapper> {
                       : Boton(
                           ontap: () {
                             if (!paused) {
-                              trip.start(dateFormat(DateTime.now()));
+                              trip.start();
                             }
                             setState(() {
                               _st.onStartTimer();
@@ -118,8 +117,7 @@ class _WrapperState extends State<Wrapper> {
                         _st.onResetTimer();
                         paused = false;
                         trip.finish(
-                          _st.toString(),
-                          DateFormat('hh:mm').format(DateTime.now()),
+                          DateTime.parse(_st.toString()),
                           "nombre",
                           Vehicle.other,
                         );

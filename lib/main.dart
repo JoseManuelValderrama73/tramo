@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:tramo/logo.dart';
-import 'package:tramo/pages/trip.dart';
-import 'package:tramo/pages/launch.dart';
+import 'package:tramo/pages/trips/trip.dart';
 import 'package:tramo/pages/wrapper.dart';
 
 void main() {

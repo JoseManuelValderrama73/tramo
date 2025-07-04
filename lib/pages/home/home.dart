@@ -3,7 +3,7 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 import 'package:tramo/constants.dart';
 import 'package:tramo/models.dart';
-import 'package:tramo/pages/home/distance.dart';
+import 'package:tramo/pages/home/widgets/distance.dart';
 import 'package:tramo/pages/home/widgets/hora.dart';
 import 'package:tramo/pages/home/widgets/std.dart';
 import 'package:tramo/pages/home/widgets/v.dart';

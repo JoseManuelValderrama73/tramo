@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.20.2
   flutter_compass: ^0.8.1
   provider: ^6.1.5
+  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:

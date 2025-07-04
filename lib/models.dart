@@ -27,9 +27,9 @@ class Point {
 
 class TripInfo {
   late final String name;
-  late final String time;
-  late final String startTime;
-  late final String endTime;
+  late final DateTime time;
+  late final DateTime startTime;
+  late final DateTime endTime;
   late final Vehicle vehicle;
   double distance; // m
   List<Point> points = [];
@@ -39,16 +39,25 @@ class TripInfo {
   int? currentSlope;
 
   TripInfo() : distance = 0, vMax = 0, vAvg = 0, running = false;
+  TripInfo.test(this.name)
+    : distance = 0,
+      vMax = 0,
+      vAvg = 0,
+      running = false,
+      time = DateTime(1970, 1, 1, 0, 0, 0, 0, 0),
+      startTime = DateTime.now(),
+      endTime = DateTime.now(),
+      vehicle = Vehicle.car;
 
-  void start(String startTime) {
-    this.startTime = startTime;
+  void start() {
+    startTime = DateTime.now();
     running = true;
   }
 
-  void finish(String time, String end, String name, Vehicle vehicle) {
+  void finish(DateTime time, String name, Vehicle vehicle) {
     this.time = time;
     this.name = name;
-    endTime = end;
+    endTime = DateTime.now();
     running = false;
     this.vehicle = vehicle;
     // TODO: guardar en dtb
@@ -57,7 +66,7 @@ class TripInfo {
   void addPoint(Point p) {
     if (running) {
       points.add(p);
-      distance = distance + 20;
+      distance = distance + 0.02;
       int l = points.length;
       vAvg = ((vAvg! * (l - 1)) + p.v) / l;
       if (p.v > vMax!) vMax = p.v;
@@ -75,7 +84,7 @@ class TripInfo {
 
 class LaunchInfo {
   late final String name;
-  late final String startTime;
+  late final DateTime startTime;
   late final Vehicle vehicle;
   late final int vMax;
   String? zeroHundred;
@@ -87,8 +96,8 @@ class LaunchInfo {
       zeroTwohundred = null,
       zeroThreehundred = null;
 
-  void start(String startTime) {
-    this.startTime = startTime;
+  void start() {
+    startTime = DateTime.now();
   }
 
   void finish(String name, Vehicle vehicle, int vMax) {
