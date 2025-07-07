@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         primaryColor: CupertinoColors.white,
         textTheme: CupertinoTextThemeData(
           primaryColor: CupertinoColors.white,
-          textStyle: TextStyle(color: CupertinoColors.white, fontSize: 18),
+          textStyle: TextStyle(color: CupertinoColors.white, fontSize: 20),
           actionTextStyle: TextStyle(
             color: CupertinoColors.white,
             fontWeight: FontWeight.bold,

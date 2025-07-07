@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:tramo/constants.dart';
 import 'package:tramo/models/trip_info.dart';
+import 'package:tramo/pages/trips/widgets/altitude_graph.dart';
 import 'package:tramo/pages/trips/widgets/map_img.dart';
+
+import 'dart:math';
 
 class TripPopup extends StatelessWidget {
   final TripInfo trip;
@@ -42,14 +46,23 @@ class TripPopup extends StatelessWidget {
           ),
           Flexible(
             flex: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(trip.name, style: titleStyle.copyWith(fontSize: 40)),
-                  Text(trip.time.hMinSecMil, style: titleStyle),
-                  Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+                  child: Text(
+                    trip.name,
+                    style: titleStyle.copyWith(fontSize: 40),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(trip.time.hMinSecMil, style: titleStyle),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
                     children: [
                       Text('${trip.distance}km'),
                       Expanded(child: SizedBox()),
@@ -58,7 +71,11 @@ class TripPopup extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
+                ),
+                Divider(height: 0, color: dividerColor),
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Row(
                     children: [
                       Expanded(
                         child: Center(
@@ -80,8 +97,19 @@ class TripPopup extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                AltitudeGraph(
+                  altitudes: [400, 500, 500, 800, 700, 1100, 1034, 1890, 1784],
+                ),
+                /*
+                AltitudeGraph(
+                  altitudes: List<int>.generate(
+                    1000,
+                    (i) => 400 + Random().nextInt(1601),
+                  ),
+                ),
+                */
+              ],
             ),
           ),
         ],
