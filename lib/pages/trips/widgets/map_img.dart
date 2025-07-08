@@ -5,6 +5,6 @@ class MapImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: CupertinoColors.activeBlue);
+    return Container(height: 220, color: CupertinoColors.activeBlue);
   }
 }

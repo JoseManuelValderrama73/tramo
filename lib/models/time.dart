@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class Time {
   final DateTime dateTime;
@@ -6,6 +7,12 @@ class Time {
   Time(this.dateTime);
   Time.now() : dateTime = DateTime.now();
   Time.fromString(String str) : dateTime = DateTime.parse(str);
+  Time.fromStopwatch(StopWatchTimer st)
+    : dateTime = DateTime(
+        2005,
+        12,
+        6,
+      ).add(Duration(milliseconds: st.rawTime.value));
 
   String get hMinSec => DateFormat('HH:mm:ss').format(dateTime);
 

@@ -13,6 +13,7 @@ import 'package:tramo/logo.dart';
 import 'package:tramo/models/trip_info.dart';
 import 'package:tramo/pages/home/widgets/mapa.dart';
 import 'package:tramo/pages/launch.dart';
+import 'package:tramo/popup.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({super.key});
@@ -28,6 +29,7 @@ class _WrapperState extends State<Wrapper> {
   late Point point;
   bool paused = false;
   bool launch = false;
+  bool guardar = false;
 
   @override
   void dispose() async {
@@ -62,85 +64,142 @@ class _WrapperState extends State<Wrapper> {
             return ErrorPage(e: 'Error adding point: $err');
           }
         }
-        return Row(
+        return Stack(
           children: [
-            Flexible(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(child: Container(color: CupertinoColors.systemGrey)),
-                  Boton(
-                    ontap: () {},
-                    color: CupertinoColors.systemGrey,
-                    icon: CupertinoIcons.settings_solid,
-                  ),
-                  Boton(
-                    ontap: () {
-                      setState(() => launch = !launch);
-                    },
-                    color: CupertinoColors.systemPurple,
-                    icon: CupertinoIcons.rocket_fill,
-                  ),
-                  Boton(
-                    ontap: () {},
-                    color: CupertinoColors.systemYellow,
-                    icon: CupertinoIcons.list_bullet,
-                  ),
-                  _st.isRunning
-                      ? Boton(
-                          ontap: () {
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(color: CupertinoColors.systemGrey),
+                      ),
+                      Boton(
+                        ontap: () {},
+                        color: CupertinoColors.systemGrey,
+                        icon: CupertinoIcons.settings_solid,
+                      ),
+                      Boton(
+                        ontap: () {
+                          setState(() => launch = !launch);
+                        },
+                        color: launch
+                            ? CupertinoColors.activeBlue
+                            : CupertinoColors.systemPurple,
+                        icon: launch
+                            ? CupertinoIcons.map
+                            : CupertinoIcons.rocket_fill,
+                      ),
+                      _st.isRunning
+                          ? Boton(
+                              ontap: () {
+                                setState(() {
+                                  _st.onStopTimer();
+                                  paused = true;
+                                });
+                              },
+                              color: CupertinoColors.activeOrange,
+                              icon: CupertinoIcons.pause_solid,
+                            )
+                          : Boton(
+                              ontap: () {
+                                if (!paused) {
+                                  trip.start();
+                                }
+                                setState(() {
+                                  _st.onStartTimer();
+                                  paused = false;
+                                });
+                              },
+                              color: CupertinoColors.activeGreen,
+                              icon: CupertinoIcons.play_arrow_solid,
+                            ),
+                      Boton(
+                        ontap: () {
+                          if (trip.points.length > 5) {
                             setState(() {
-                              _st.onStopTimer();
-                              paused = true;
+                              guardar = true;
                             });
-                          },
-                          color: CupertinoColors.activeOrange,
-                          icon: CupertinoIcons.pause_solid,
-                        )
-                      : Boton(
-                          ontap: () {
-                            if (!paused) {
-                              trip.start();
-                            }
+                          } else {
+                            _st.onResetTimer();
                             setState(() {
-                              _st.onStartTimer();
                               paused = false;
+                              trip = TripInfo();
                             });
-                          },
-                          color: CupertinoColors.activeGreen,
-                          icon: CupertinoIcons.play_arrow_solid,
-                        ),
-                  Boton(
-                    ontap: () {
-                      setState(() {
-                        _st.onResetTimer();
-                        paused = false;
+                          }
+                        },
+                        color: CupertinoColors.destructiveRed,
+                        icon: CupertinoIcons.square_fill,
+                      ),
+                      Expanded(
+                        child: Container(color: CupertinoColors.destructiveRed),
+                      ),
+                    ],
+                  ),
+                ),
+                launch
+                    ? Flexible(flex: 5, child: Launch(speed: point.v))
+                    : Flexible(
+                        flex: 5,
+                        child: Home(st: _st, trip: trip, point: point),
+                      ),
+                const Flexible(flex: 6, child: Mapa()),
+              ],
+            ),
+            Visibility(
+              visible: true,
+              child: Center(
+                child: Popup(
+                  color: CupertinoColors.activeOrange,
+                  padding: EdgeInsets.symmetric(vertical: 50, horizontal: 200),
+                  title: 'Guardar ruta',
+                  widgets: [],
+                  buttons: [
+                    Button(
+                      color: CupertinoColors.activeOrange,
+                      txt: 'Cancelar',
+                      onTap: () {
+                        setState(() {
+                          guardar = false;
+                        });
+                      },
+                    ),
+                    Button(
+                      color: CupertinoColors.destructiveRed,
+                      txt: 'Descartar',
+                      onTap: () {
+                        setState(() {
+                          trip = TripInfo();
+                          guardar = false;
+                          _st.onResetTimer();
+                          paused = false;
+                        });
+                      },
+                    ),
+                    Button(
+                      color: CupertinoColors.systemGreen,
+                      txt: 'Guardar',
+                      onTap: () {
                         trip.finish(
-                          Time.fromString(_st.toString()),
+                          Time.fromStopwatch(_st),
                           "nombre",
                           Vehicle.other,
                         );
-                        trip = TripInfo();
-                      });
-                    },
-                    color: CupertinoColors.destructiveRed,
-                    icon: CupertinoIcons.square_fill,
-                  ),
-                  Expanded(
-                    child: Container(color: CupertinoColors.destructiveRed),
-                  ),
-                ],
+                        setState(() {
+                          trip = TripInfo();
+                          guardar = false;
+                          _st.onResetTimer();
+                          paused = false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            launch
-                ? Flexible(flex: 5, child: Launch(speed: point.v))
-                : Flexible(
-                    flex: 5,
-                    child: Home(st: _st, trip: trip, point: point),
-                  ),
-            const Flexible(flex: 6, child: Mapa()),
           ],
         );
       },
