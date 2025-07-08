@@ -25,14 +25,37 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   final StopWatchTimer _st = StopWatchTimer();
 
+  final TextEditingController _tripNameController = TextEditingController();
+  String? tripName;
+
   TripInfo trip = TripInfo();
   late Point point;
   bool paused = false;
   bool launch = false;
   bool guardar = false;
 
+  int? selectedVehicle;
+  void _showVehicleDialog(Widget child) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        // The Bottom margin is provided to align the popup above the system navigation bar.
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        // Provide a background color for the popup.
+        color: CupertinoColors.systemBackground.resolveFrom(context),
+        // Use a SafeArea widget to avoid system overlaps.
+        child: SafeArea(top: false, child: child),
+      ),
+    );
+  }
+
   @override
   void dispose() async {
+    _tripNameController.dispose();
     super.dispose();
     await _st.dispose();
   }
@@ -149,16 +172,70 @@ class _WrapperState extends State<Wrapper> {
                 const Flexible(flex: 6, child: Mapa()),
               ],
             ),
+
+            // POPUPS
             Visibility(
-              visible: true,
+              visible: guardar,
               child: Center(
                 child: Popup(
                   color: CupertinoColors.activeOrange,
                   padding: EdgeInsets.symmetric(vertical: 50, horizontal: 200),
                   title: 'Guardar ruta',
-                  widgets: [],
+                  widgets: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: CupertinoColors.systemGrey6.withOpacity(0.8),
+                        border: Border.all(
+                          color: CupertinoColors.activeOrange,
+                          width: 2.5,
+                        ),
+                      ),
+                      child: CupertinoTextField(
+                        controller: _tripNameController,
+                        placeholder: 'Nombre de la ruta',
+                        style: const TextStyle(fontSize: 18),
+                        decoration: null,
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                    PopupButton(
+                      color: CupertinoColors.activeOrange,
+                      txt: selectedVehicle == null
+                          ? 'Vehículo'
+                          : Vehicle.values[selectedVehicle!].name,
+                      onTap: () => _showVehicleDialog(
+                        CupertinoPicker(
+                          magnification: 1.22,
+                          squeeze: 1.2,
+                          useMagnifier: true,
+                          itemExtent: 32,
+                          scrollController: FixedExtentScrollController(
+                            initialItem: selectedVehicle ?? 0,
+                          ),
+                          onSelectedItemChanged: (int selectedItem) {
+                            setState(() {
+                              selectedVehicle = selectedItem;
+                            });
+                          },
+                          children: List<Widget>.generate(
+                            Vehicle.values.length,
+                            (int index) {
+                              return Center(
+                                child: Text(Vehicle.values[index].name),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                   buttons: [
-                    Button(
+                    PopupButton(
                       color: CupertinoColors.activeOrange,
                       txt: 'Cancelar',
                       onTap: () {
@@ -167,7 +244,7 @@ class _WrapperState extends State<Wrapper> {
                         });
                       },
                     ),
-                    Button(
+                    PopupButton(
                       color: CupertinoColors.destructiveRed,
                       txt: 'Descartar',
                       onTap: () {
@@ -179,21 +256,24 @@ class _WrapperState extends State<Wrapper> {
                         });
                       },
                     ),
-                    Button(
+                    PopupButton(
                       color: CupertinoColors.systemGreen,
                       txt: 'Guardar',
                       onTap: () {
-                        trip.finish(
-                          Time.fromStopwatch(_st),
-                          "nombre",
-                          Vehicle.other,
-                        );
-                        setState(() {
-                          trip = TripInfo();
-                          guardar = false;
-                          _st.onResetTimer();
-                          paused = false;
-                        });
+                        if (_tripNameController.text.trim().isNotEmpty) {
+                          setState(() {
+                            tripName = _tripNameController.text.trim();
+                            trip.finish(
+                              Time.fromStopwatch(_st),
+                              tripName!,
+                              Vehicle.values[selectedVehicle!],
+                            );
+                            trip = TripInfo();
+                            guardar = false;
+                            _st.onResetTimer();
+                            paused = false;
+                          });
+                        }
                       },
                     ),
                   ],

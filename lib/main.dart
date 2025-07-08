@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: CupertinoPageScaffold(
+        resizeToAvoidBottomInset: false,
         child: FutureBuilder(
           future: checkPermissions(),
           builder: (context, snapshot) {
